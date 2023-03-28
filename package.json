@@ -1,0 +1,22 @@
+{
+  "name": "boxue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "push": "cd build && node push.js",
+    "p": "cd build && node push.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitee.com:gkme/boxue.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "2.4.2",
+    "shelljs": "^0.8.5"
+  }
+}
