@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+
+  <!-- 使用 http-equiv 设置 Cache-Control -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <!-- 使用Pragma禁止页面缓存 -->
+  <meta http-equiv="Pragma" content="no-cache">
+  <!-- 设置缓存时间为0 -->
+  <meta http-equiv="Cache-Control" content="max-age=0">
+  <!-- 设置expires过期时间为过去的时间 -->
+  <meta http-equiv="expires" content="Wed, 21 Oct 2021 07:28:00 GMT">
+  <title>房贷时间</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .item-box {
+      position: absolute;
+      width: 100%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .item-title {
+      margin: 20px auto;
+      font-size: 35px;
+      text-align: center;
+    }
+
+    .time-num {
+      color: #cd3285;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="item-box">
+    <div class="item-title" id="item_1">房贷:<span id="num_1" class="time-num"></span>天</div>
+    <div class="item-title" id="item_3"></div>
+    <br />
+    <div class="item-title" id="item_2">车贷:<span id="num_2" class="time-num"></span>天</div>
+    <div class="item-title" id="item_4"></div>
+    <br />
+    <div class="item-title" id="item_5">解放(28年元旦):<span id="num_5" class="time-num"></span>天</div>
+    <div class="item-title" id="item_6"></div>
+  </div>
+
+  <script>
+    function convertMilliseconds(time1, time2) {
+      // 将时间字符串转换为Date对象
+      const date1 = new Date(time1);
+      const date2 = new Date(time2);
+
+      // 计算时间差（毫秒）
+      const timeDifference = Math.abs(date2.getTime() - date1.getTime());
+
+      // 将时间差转换为年、月、天、小时、分钟和秒
+      const years = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 365.25));
+      const months = Math.floor((timeDifference % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24 * 30.4375));
+      const days = Math.floor((timeDifference % (1000 * 60 * 60 * 24 * 30.4375)) / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      // 返回结果
+      return {
+        years: years,
+        months: months,
+        days: days,
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds
+      };
+    }
+
+    function formatDuration(a, b) {
+      const time = convertMilliseconds(a, b);
+
+      let duration = '';
+      if (time.years > 0) {
+        duration += time.years + '年';
+      }
+      if (time.months > 0) {
+        duration += time.months + '月';
+      }
+      if (time.days > 0) {
+        duration += time.days + '天';
+      }
+      if (time.hours > 0) {
+        duration += time.hours + '小时';
+      }
+      if (time.minutes > 0) {
+        duration += time.minutes + '分';
+      }
+      return duration;
+    }
+
+    function fillNum(time, elId, numId, el_2) {
+      const d1 = new Date();
+      const d2 = new Date(time);
+
+      const msPerDay = 1000 * 60 * 60 * 24;
+      const diff = Math.abs((d2.getTime() - d1.getTime()) / msPerDay);
+      document.getElementById(numId).innerHTML = diff.toFixed(2);
+      document.getElementById(el_2).innerHTML = formatDuration(d1, time);
+    }
+    fillNum('2031-04-01T00:00:00', 'item_1', 'num_1', 'item_3');
+    fillNum('2024-12-01T00:00:00', 'item_2', 'num_2', 'item_4');
+    fillNum('2028-01-01T00:00:00', 'item_5', 'num_5', 'item_6');
+  </script>
+</body>
+
+</html>
